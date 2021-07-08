@@ -23,10 +23,17 @@ echo "DEEPDRIVE_VERSION is ${DEEPDRIVE_VERSION}"
 
 # Compile wheels
 for PYBIN in  "${py_versions[@]}"; do
-    "${PYBIN}/pip" install -r /io/DeepDrivePython/dev-requirements.txt
+    echo $PYBIN
+    echo ${py_versions[@]}
+    if [ "PYBIN" == "/opt/python/cp35-cp35m/bin/python" && "$(uname -m)" == "aarch64" ]
+    then
+        continue
+    else
+       "${PYBIN}/pip" install -r /io/DeepDrivePython/dev-requirements.txt
 
-    # Call setup.py
-    "${PYBIN}/pip" wheel /io/DeepDrivePython -w wheelhouse/
+       # Call setup.py
+       "${PYBIN}/pip" wheel /io/DeepDrivePython -w wheelhouse/
+    fi
 done
 
 # Bundle external shared libraries into the wheels
