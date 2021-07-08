@@ -15,18 +15,14 @@ matrix:
     - docker
     env:
       - DOCKER_IMAGE=quay.io/pypa/manylinux2014_aarch64
-  - sudo: required
-    services:
-    - docker
-    env:
-      - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686
-      - PRE_CMD=linux32
+  
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y cppcheck
   - pip install -r .ci/requirements.txt
   - pip install --upgrade --force-reinstall --ignore-installed --no-cache-dir git+git://github.com/deepdrive/problem-constants#egg=problem-constants
   - pip install --upgrade pip
+  - pip install grpcio
   - pip install --upgrade --force-reinstall --ignore-installed --no-cache-dir git+git://github.com/botleague/botleague-helpers#egg=botleague-helpers
 install:
 - docker pull $DOCKER_IMAGE
