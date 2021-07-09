@@ -12,7 +12,12 @@ export DEEPDRIVE_SRC_DIR="$( dirname "$( dirname ${DIR})" )"
 echo DEEPDRIVE_SRC_DIR=${DEEPDRIVE_SRC_DIR}
 
 # Get python versions on docker image, i.e. /opt/python/cp35-cp35m/bin /opt/python/cp36-cp36m/bin ...
-py_versions_str=`cd ${DIR} && /opt/python/cp35-cp35m/bin/python -c "import build; print(build.get_centos_py_versions())"`
+if [ "$(uname -m)" == "aarch64" ]
+then
+   py_versions_str=`cd ${DIR} && /opt/python/cp36-cp36m/bin/python -c "import build; print(build.get_centos_py_versions())"`
+else
+   py_versions_str=`cd ${DIR} && /opt/python/cp35-cp35m/bin/python -c "import build; print(build.get_centos_py_versions())"`
+fi
 py_versions=( ${py_versions_str} )
 
 # Delete previous builds (for testing locally)
@@ -23,17 +28,10 @@ echo "DEEPDRIVE_VERSION is ${DEEPDRIVE_VERSION}"
 
 # Compile wheels
 for PYBIN in  "${py_versions[@]}"; do
-    echo $PYBIN
-    echo ${py_versions[@]}
-    if [ "PYBIN" == "/opt/python/cp35-cp35m/bin/python" && "$(uname -m)" == "aarch64" ]
-    then
-        continue
-    else
-       "${PYBIN}/pip" install -r /io/DeepDrivePython/dev-requirements.txt
+    "${PYBIN}/pip" install -r /io/DeepDrivePython/dev-requirements.txt
 
-       # Call setup.py
-       "${PYBIN}/pip" wheel /io/DeepDrivePython -w wheelhouse/
-    fi
+    # Call setup.py
+    "${PYBIN}/pip" wheel /io/DeepDrivePython -w wheelhouse/
 done
 
 # Bundle external shared libraries into the wheels
