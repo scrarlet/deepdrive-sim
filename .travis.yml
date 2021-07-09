@@ -10,6 +10,11 @@ env:
 matrix:
   include:
   - sudo: required
+    services:
+    - docker
+    env:
+      - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+  - sudo: required
     arch: arm64
     services:
     - docker
