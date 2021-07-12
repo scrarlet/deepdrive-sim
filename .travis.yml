@@ -15,6 +15,7 @@ matrix:
   #  env:
   #    - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
   - sudo: required
+    dist: focal
     arch: arm64
     services:
     - docker
