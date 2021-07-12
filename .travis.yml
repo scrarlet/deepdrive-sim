@@ -14,13 +14,13 @@ matrix:
     - docker
     env:
       - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
-  - sudo: required
-    dist: focal
-    arch: arm64
-    services:
-    - docker
-    env:
-      - DOCKER_IMAGE=quay.io/pypa/manylinux2014_aarch64
+  #- sudo: required
+  #  dist: focal
+  #  arch: arm64
+  #  services:
+  #  - docker
+  #  env:
+  #    - DOCKER_IMAGE=quay.io/pypa/manylinux2014_aarch64
   
 before_install:
   - sudo apt-get update
@@ -31,6 +31,7 @@ before_install:
   - pip --version
   #- pip install grpcio
   - pip install --upgrade --force-reinstall --ignore-installed --no-cache-dir git+git://github.com/botleague/botleague-helpers#egg=botleague-helpers
+  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y -v
 install:
 - docker pull $DOCKER_IMAGE
 script:
