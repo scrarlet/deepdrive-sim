@@ -28,9 +28,9 @@ before_install:
   - sudo apt-get install -y cppcheck
   - pip install -r .ci/requirements.txt
   - pip install --upgrade --force-reinstall --ignore-installed --no-cache-dir git+git://github.com/deepdrive/problem-constants#egg=problem-constants
-  #- pip install --upgrade pip
-  #- pip --version
-  #- pip install grpcio
+  - if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
+    pip install --upgrade pip;
+    fi
   - pip install --upgrade --force-reinstall --ignore-installed --no-cache-dir git+git://github.com/botleague/botleague-helpers#egg=botleague-helpers
   #- curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y -v
   #- export PATH=$PATH:$HOME/.cargo/bin
