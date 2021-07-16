@@ -12,12 +12,13 @@ export DEEPDRIVE_SRC_DIR="$( dirname "$( dirname ${DIR})" )"
 echo DEEPDRIVE_SRC_DIR=${DEEPDRIVE_SRC_DIR}
 
 # Get python versions on docker image, i.e. /opt/python/cp35-cp35m/bin /opt/python/cp36-cp36m/bin ...
-if [ "$(uname -m)" == "aarch64" ]
-then
-   py_versions_str=`cd ${DIR} && /opt/python/cp36-cp36m/bin/python -c "import build; print(build.get_centos_py_versions())"`
-else
-   py_versions_str=`cd ${DIR} && /opt/python/cp35-cp35m/bin/python -c "import build; print(build.get_centos_py_versions())"`
-fi
+#if [ "$(uname -m)" == "aarch64" ]
+#then
+#   py_versions_str=`cd ${DIR} && /opt/python/cp36-cp36m/bin/python -c "import build; print(build.get_centos_py_versions())"`
+#else
+#   py_versions_str=`cd ${DIR} && /opt/python/cp35-cp35m/bin/python -c "import build; print(build.get_centos_py_versions())"`
+#fi
+py_versions_str=`cd ${DIR} && /opt/python/cp35-cp35m/bin/python -c "import build; print(build.get_centos_py_versions())"`
 py_versions=( ${py_versions_str} )
 
 # Delete previous builds (for testing locally)
